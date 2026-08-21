@@ -1,0 +1,46 @@
+{
+  "name": "@justinscott12/modrinth-mcp",
+  "version": "0.1.0",
+  "description": "MCP server for searching Modrinth and publishing Minecraft mods (create projects, upload versions) via the Modrinth API.",
+  "type": "module",
+  "bin": {
+    "modrinth-mcp": "src/index.js"
+  },
+  "files": [
+    "src/",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "start": "node src/index.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "modrinth",
+    "minecraft",
+    "fabric",
+    "mods",
+    "claude"
+  ],
+  "author": "justinscott12 (https://github.com/justinscott12)",
+  "license": "MIT",
+  "homepage": "https://github.com/justinscott12/modrinth-mcp#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/justinscott12/modrinth-mcp.git"
+  },
+  "bugs": {
+    "url": "https://github.com/justinscott12/modrinth-mcp/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.0",
+    "zod": "^3.23.8"
+  }
+}

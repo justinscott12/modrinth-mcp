@@ -1,0 +1,4 @@
+# Publish only what "files" in package.json allows; keep plugin/dev files out of the npm tarball.
+.claude-plugin/
+.mcp.json
+.gitignore

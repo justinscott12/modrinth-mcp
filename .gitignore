@@ -1,0 +1,11 @@
+node_modules/
+*.log
+npm-debug.log*
+.env
+.env.*
+.DS_Store
+
+# local one-off publish scripts (not part of the server)
+fix-and-resubmit-instamineable.js
+publish-instamineable.js
+instamineable-body.md

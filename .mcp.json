@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "modrinth": {
+      "command": "npx",
+      "args": ["-y", "@justinscott12/modrinth-mcp"],
+      "env": {
+        "MODRINTH_TOKEN": "${user_config.modrinth_token}"
+      }
+    }
+  }
+}

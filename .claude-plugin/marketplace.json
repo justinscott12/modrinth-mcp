@@ -1,0 +1,20 @@
+{
+  "name": "justinscott12",
+  "owner": {
+    "name": "justinscott12",
+    "url": "https://github.com/justinscott12"
+  },
+  "plugins": [
+    {
+      "name": "modrinth-mcp",
+      "displayName": "Modrinth",
+      "description": "Search Modrinth and publish Minecraft mods (create projects, upload versions) through the Modrinth API.",
+      "version": "0.1.0",
+      "author": "justinscott12",
+      "source": {
+        "type": "directory",
+        "path": "./"
+      }
+    }
+  ]
+}
