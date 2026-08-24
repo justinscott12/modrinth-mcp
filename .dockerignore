@@ -1,0 +1,7 @@
+node_modules/
+.git/
+.claude-plugin/
+plugins/
+*.log
+.env
+.env.*
