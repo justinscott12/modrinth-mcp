@@ -4,17 +4,20 @@
     "name": "justinscott12",
     "url": "https://github.com/justinscott12"
   },
+  "description": "justinscott12's Claude Code plugins.",
   "plugins": [
     {
       "name": "modrinth-mcp",
+      "source": "./plugins/modrinth",
       "displayName": "Modrinth",
       "description": "Search Modrinth and publish Minecraft mods (create projects, upload versions) through the Modrinth API.",
       "version": "0.1.0",
-      "author": "justinscott12",
-      "source": {
-        "type": "directory",
-        "path": "./"
-      }
+      "author": {
+        "name": "justinscott12",
+        "url": "https://github.com/justinscott12"
+      },
+      "license": "MIT",
+      "keywords": ["modrinth", "minecraft", "fabric", "mods", "mcp"]
     }
   ]
 }
