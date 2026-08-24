@@ -26,7 +26,7 @@ import {
 } from "@modelcontextprotocol/sdk/types.js";
 import { z } from "zod";
 
-const VERSION = "0.1.0";
+const VERSION = "0.1.1";
 const BASE_URL = process.env.MODRINTH_STAGING
   ? "https://staging-api.modrinth.com"
   : "https://api.modrinth.com";

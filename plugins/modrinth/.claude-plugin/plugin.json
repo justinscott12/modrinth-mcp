@@ -1,7 +1,7 @@
 {
   "name": "modrinth-mcp",
   "displayName": "Modrinth",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Search Modrinth and publish Minecraft mods (create projects, upload versions) through the Modrinth API.",
   "author": {
     "name": "justinscott12",

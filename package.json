@@ -1,6 +1,7 @@
 {
   "name": "@justinscott12/modrinth-mcp",
-  "version": "0.1.0",
+  "version": "0.1.1",
+  "mcpName": "io.github.justinscott12/modrinth-mcp",
   "description": "MCP server for searching Modrinth and publishing Minecraft mods (create projects, upload versions) via the Modrinth API.",
   "type": "module",
   "bin": {
