@@ -1,7 +1,7 @@
 {
   "name": "modrinth-mcp",
   "displayName": "Modrinth",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Search Modrinth and publish Minecraft mods (create projects, upload versions) through the Modrinth API.",
   "author": {
     "name": "justinscott12",
@@ -11,14 +11,5 @@
   "repository": "https://github.com/justinscott12/modrinth-mcp",
   "license": "MIT",
   "keywords": ["modrinth", "minecraft", "fabric", "mods", "mcp"],
-  "mcpServers": "./.mcp.json",
-  "userConfig": {
-    "modrinth_token": {
-      "type": "string",
-      "title": "Modrinth Personal Access Token",
-      "description": "Create one at https://modrinth.com/settings/pats with scopes: Read projects, Read versions, Create versions, Write versions. Required only for write actions (whoami, create/modify).",
-      "sensitive": true,
-      "required": false
-    }
-  }
+  "mcpServers": "./.mcp.json"
 }

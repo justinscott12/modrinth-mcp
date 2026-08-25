@@ -4,7 +4,7 @@
       "command": "npx",
       "args": ["-y", "@justinscott12/modrinth-mcp"],
       "env": {
-        "MODRINTH_TOKEN": "${user_config.modrinth_token}"
+        "MODRINTH_TOKEN": "${MODRINTH_TOKEN}"
       }
     }
   }

@@ -11,7 +11,7 @@
       "source": "./plugins/modrinth",
       "displayName": "Modrinth",
       "description": "Search Modrinth and publish Minecraft mods (create projects, upload versions) through the Modrinth API.",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "author": {
         "name": "justinscott12",
         "url": "https://github.com/justinscott12"

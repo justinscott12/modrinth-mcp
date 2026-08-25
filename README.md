@@ -36,7 +36,21 @@ Set it as the `MODRINTH_TOKEN` environment variable.
 /plugin install modrinth-mcp@justinscott12
 ```
 
-You'll be prompted for your Modrinth token when enabling the plugin. It runs the published npm package under the hood via `npx`.
+It runs the published npm package under the hood via `npx`. Claude Code
+plugins have no token-entry UI, so the server reads its token from the
+`MODRINTH_TOKEN` **environment variable** in the environment Claude Code
+runs in. Set it before launching Claude Code, e.g.:
+
+```bash
+# macOS/Linux (add to your shell profile to persist)
+export MODRINTH_TOKEN=your-modrinth-pat
+
+# Windows PowerShell (persist for your user)
+setx MODRINTH_TOKEN "your-modrinth-pat"
+```
+
+Then restart Claude Code and run `modrinth_whoami` to confirm. Read-only
+tools (search, get project/versions) work without a token.
 
 ### As an MCP server (any client)
 
