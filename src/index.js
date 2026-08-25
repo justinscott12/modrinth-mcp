@@ -26,7 +26,7 @@ import {
 } from "@modelcontextprotocol/sdk/types.js";
 import { z } from "zod";
 
-const VERSION = "0.1.1";
+const VERSION = "0.1.2";
 const BASE_URL = process.env.MODRINTH_STAGING
   ? "https://staging-api.modrinth.com"
   : "https://api.modrinth.com";
@@ -271,8 +271,12 @@ const tools = [
       } = input;
 
       // The version endpoint requires the project's base62 id, not the slug —
-      // resolve it so callers can pass either.
-      const proj = await api(`/v2/project/${encodeURIComponent(project_id)}`);
+      // resolve it so callers can pass either. Must authenticate: a freshly
+      // created project is a DRAFT, and drafts (like private/unlisted projects)
+      // 404 on an unauthenticated GET.
+      const proj = await api(`/v2/project/${encodeURIComponent(project_id)}`, {
+        auth: true,
+      });
       const realProjectId = proj.id;
 
       // Read all files first so we can append the JSON `data` part BEFORE the
@@ -436,6 +440,11 @@ const tools = [
         client_side,
         server_side,
         license_id,
+        // Modrinth's /v2/project POST requires this field even when creating an
+        // empty draft with no files. Omitting it fails with
+        // "missing field `initial_versions`". We never upload files here (jars go
+        // through modrinth_create_version), so an empty array is correct.
+        initial_versions: [],
         is_draft: true, // Modrinth: always create as a draft
         requested_status,
         ...(source_url ? { source_url } : {}),
