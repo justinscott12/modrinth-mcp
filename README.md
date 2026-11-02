@@ -1,5 +1,7 @@
 # modrinth-mcp
 
+[![Modrinth MCP server](https://mcprush.com/badge/modrinth-mcp/card.svg)](https://mcprush.com/to/modrinth-mcp?ref=badge)
+
 An [MCP](https://modelcontextprotocol.io) server that wraps the [Modrinth](https://modrinth.com) API so an AI agent (Claude Code, Claude Desktop, Cursor, …) can search projects, read project/version metadata, and **publish Minecraft mods** — create projects and upload built jars as new versions.
 
 ## Tools
