@@ -85,6 +85,8 @@ claude mcp add modrinth --env MODRINTH_TOKEN=your-modrinth-pat -- npx -y @justin
 | `MODRINTH_TOKEN` | – | Modrinth Personal Access Token. Required for write actions. |
 | `MODRINTH_STAGING` | unset | Set to `1` to hit `https://staging-api.modrinth.com` for safe testing. |
 | `MODRINTH_USER_AGENT` | `modrinth-mcp/<version> …` | Override the User-Agent sent to Modrinth. |
+| `MODRINTH_TIMEOUT_MS` | `60000` | Per-request timeout. A stalled request returns a tool error instead of hanging. |
+| `MODRINTH_API_URL` | – | Override the API base URL (for a proxy or tests). Takes precedence over `MODRINTH_STAGING`. |
 
 ## Example flow
 
@@ -103,6 +105,15 @@ MODRINTH_STAGING=1 MODRINTH_TOKEN=your-staging-pat npm start
 ```
 
 The server speaks MCP over stdio. `stdout` is reserved for the protocol; logs go to `stderr`.
+
+`npm test` runs the server over stdio against a local stub (no Modrinth calls).
+
+The server ignores `SIGINT`/`SIGBREAK` and exits when the client closes stdin. A console
+Ctrl+C or Ctrl+Break reaches every process on the console, and on Windows `npx` runs the server
+through a `.cmd` shim: if node exited, `cmd.exe` would keep the pipe open at a
+`Terminate batch job (Y/N)?` prompt and every later tool call would hang. Node can't simulate
+that on Windows, so check it by hand there: send `GenerateConsoleCtrlEvent` to a shim-launched
+server and confirm `tools/list` still answers.
 
 ## License
 

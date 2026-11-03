@@ -14,6 +14,8 @@
  * Optional env:
  *   MODRINTH_STAGING=1   -> use https://staging-api.modrinth.com (safe testing)
  *   MODRINTH_USER_AGENT  -> override the User-Agent Modrinth asks clients to send
+ *   MODRINTH_TIMEOUT_MS  -> per-request timeout in ms (default 60000)
+ *   MODRINTH_API_URL     -> override the API base URL (proxies, tests)
  */
 
 import { readFile } from "node:fs/promises";
@@ -26,10 +28,13 @@ import {
 } from "@modelcontextprotocol/sdk/types.js";
 import { z } from "zod";
 
-const VERSION = "0.1.2";
-const BASE_URL = process.env.MODRINTH_STAGING
-  ? "https://staging-api.modrinth.com"
-  : "https://api.modrinth.com";
+const VERSION = "0.1.3";
+const BASE_URL =
+  process.env.MODRINTH_API_URL ||
+  (process.env.MODRINTH_STAGING
+    ? "https://staging-api.modrinth.com"
+    : "https://api.modrinth.com");
+const TIMEOUT_MS = Number(process.env.MODRINTH_TIMEOUT_MS) || 60_000;
 const USER_AGENT =
   process.env.MODRINTH_USER_AGENT ||
   `modrinth-mcp/${VERSION} (+https://github.com/justinscott12/modrinth-mcp)`;
@@ -57,8 +62,26 @@ async function api(path, { method = "GET", body, auth = false, headers = {} } = 
     requireToken();
     h["Authorization"] = TOKEN; // Modrinth uses the raw PAT, no "Bearer" prefix
   }
-  const res = await fetch(`${BASE_URL}${path}`, { method, headers: h, body });
-  const text = await res.text();
+  // One deadline covers connect, upload, and reading the body, so a stalled
+  // connection becomes a tool error instead of a call that never returns.
+  let res, text;
+  try {
+    res = await fetch(`${BASE_URL}${path}`, {
+      method,
+      headers: h,
+      body,
+      signal: AbortSignal.timeout(TIMEOUT_MS),
+    });
+    text = await res.text();
+  } catch (err) {
+    if (err.name === "TimeoutError") {
+      throw new Error(
+        `Modrinth API timed out after ${TIMEOUT_MS}ms on ${method} ${path}. ` +
+          "Modrinth may be slow or unreachable; retry, or raise MODRINTH_TIMEOUT_MS.",
+      );
+    }
+    throw new Error(`Modrinth API request failed on ${method} ${path}: ${err.message}`);
+  }
   let data = null;
   if (text) {
     try {
@@ -598,6 +621,15 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
     };
   }
 });
+
+// A console Ctrl+C / Ctrl+Break reaches every process attached to the console,
+// not just the one the user meant to interrupt. On Windows, npx launches this
+// server through a .cmd shim; if node exits on that signal, cmd.exe stays alive
+// holding the pipe at a "Terminate batch job (Y/N)?" prompt, and every later tool
+// call hangs with no response. MCP clients shut stdio servers down by closing
+// stdin (then SIGTERM), so ignore the interactive signals and exit on stdin EOF.
+for (const sig of ["SIGINT", "SIGBREAK"]) process.on(sig, () => {});
+process.stdin.on("end", () => process.exit(0));
 
 const transport = new StdioServerTransport();
 await server.connect(transport);
